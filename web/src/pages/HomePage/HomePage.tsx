@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
 
 import { Metadata } from '@redwoodjs/web'
-// todo export this component into component folder
-const PomoBtn = ({ btnText }: { btnText: string }) => {
-  return (
-    <button className="m-8 rounded-md p-4 text-white hover:bg-red-500">
-      {btnText}
-    </button>
-  )
-}
+
+import PomoBtn from 'src/components/PomoBtn/PomoBtn'
 
 const HomePage = () => {
   const pomodoroTimer = 25 * 60
+  const shortBreakTimer = 5 * 60
+  const longBreakTimer = 10 * 60
   const [totalSeconds, setTotalSeconds] = useState(pomodoroTimer)
   const [isRunning, setIsRunning] = useState(false) // Estado para controlar se o timer está em execução
+  const [timerSelected, setTimerSelected] = useState('pomodoro')
   // Função para iniciar ou parar o timer
 
   useEffect(() => {
@@ -44,15 +41,40 @@ const HomePage = () => {
   const toggleTimer = () => {
     setIsRunning((prevIsRunning) => !prevIsRunning) // Inverte o estado de isRunning ao clicar no botão
   }
+  const setShortBreak = () => {
+    setTimerSelected('short-break')
+    setTotalSeconds(shortBreakTimer)
+  }
+  const setLongBreak = () => {
+    setTimerSelected('long-break')
+    setTotalSeconds(longBreakTimer)
+  }
+  const setPomodoro = () => {
+    setTimerSelected('pomodoro')
+    setTotalSeconds(pomodoroTimer)
+  }
   return (
     <>
       <Metadata title="Home" description="Home page" />
       <div className="flex w-full pt-20">
+        {/* Todo trocar cor quando clicar nos breaks */}
         <div className="mx-auto  rounded-lg bg-red-400 p-8">
           <div className="space-between mx-auto flex ">
-            <PomoBtn btnText="pomodoro" />
-            <PomoBtn btnText="Short breake" />
-            <PomoBtn btnText="Long breake" />
+            <PomoBtn
+              isSelected={timerSelected === 'pomodoro'}
+              onClickFunc={setPomodoro}
+              btnText="pomodoro"
+            />
+            <PomoBtn
+              isSelected={timerSelected === 'short-break'}
+              onClickFunc={setShortBreak}
+              btnText="Short breake"
+            />
+            <PomoBtn
+              isSelected={timerSelected === 'long-break'}
+              onClickFunc={setLongBreak}
+              btnText="Long breake"
+            />
           </div>
           <div className="text-center text-9xl font-bold text-slate-50">
             {formatTime(totalSeconds)}
