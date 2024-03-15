@@ -4,7 +4,13 @@ import { Metadata } from '@redwoodjs/web'
 
 import PomoBtn from 'src/components/PomoBtn/PomoBtn'
 
+import alarmSound from './alarm.mp3'
+
 const HomePage = () => {
+  const playAlarm = () => {
+    const audio = new Audio(alarmSound)
+    audio.play()
+  }
   const timers = {
     pomodoro: 25 * 60,
     shortBreak: 5 * 60,
@@ -22,6 +28,7 @@ const HomePage = () => {
         if (totalSeconds > 0) {
           setTotalSeconds((prevTotalSeconds) => prevTotalSeconds - 1)
         } else {
+          playAlarm()
           clearInterval(timer)
           setIsRunning(false)
         }
