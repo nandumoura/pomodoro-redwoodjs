@@ -11,3 +11,8 @@
 /**
  * END --- SETUP TAILWINDCSS EDIT
  */
+ .selected {
+  filter: brightness(0.9);
+  font-weight: 700;
+   /* Reduz o brilho para 50% */
+}

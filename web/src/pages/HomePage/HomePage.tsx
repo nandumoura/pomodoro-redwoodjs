@@ -47,16 +47,28 @@ const HomePage = () => {
     setTimerSelected(timer)
     setTotalSeconds(timers[timer])
   }
+  const colorSelected = `${
+    timerSelected === 'pomodoro'
+      ? 'bg-red-400'
+      : timerSelected === 'shortBreak'
+      ? 'bg-emerald-400'
+      : timerSelected === 'longBreak'
+      ? 'bg-slate-400'
+      : 'bg-teal-400'
+  }`
+
+  const containerClassName = `mx-auto rounded-lg p-8 ${colorSelected}`
 
   return (
     <>
       <Metadata title="Home" description="Home page" />
-      <div className="flex w-full pt-20">
-        <div className="mx-auto rounded-lg bg-red-400 p-8">
+      <div className="md:pt8 flex w-full pt-8 md:pt-20">
+        <div className={containerClassName}>
           <div className="space-between mx-auto flex ">
             {Object.keys(timers).map((timer) => (
               <PomoBtn
                 key={timer}
+                color={colorSelected.replace('bg-', '').replace('-400', '')}
                 isSelected={timerSelected === timer}
                 onClickFunc={() => selectTimer(timer)}
                 btnText={timer}
@@ -69,7 +81,7 @@ const HomePage = () => {
           <div className="flex justify-center p-8">
             <button
               onClick={toggleTimer}
-              className="rounded-md bg-red-600 p-4 text-4xl font-black text-white hover:bg-red-900"
+              className="rounded-md border-4 p-4 text-4xl font-black text-white"
             >
               {isRunning ? 'STOP' : 'START'}
             </button>
