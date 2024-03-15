@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { Metadata } from '@redwoodjs/web'
 
+import DisplayTimer from 'src/components/DisplayTimer/DisplayTimer'
 import PomoBtn from 'src/components/PomoBtn/PomoBtn'
 
 import alarmSound from './alarm.mp3'
@@ -37,14 +38,6 @@ const HomePage = () => {
 
     return () => clearInterval(timer)
   }, [totalSeconds, isRunning])
-
-  const formatTime = (totalSeconds) => {
-    const minutes = Math.floor(totalSeconds / 60)
-    const seconds = totalSeconds % 60
-    return `${minutes.toString().padStart(2, '0')}:${seconds
-      .toString()
-      .padStart(2, '0')}`
-  }
 
   const toggleTimer = () => {
     setIsRunning((prevIsRunning) => !prevIsRunning)
@@ -82,9 +75,7 @@ const HomePage = () => {
               />
             ))}
           </div>
-          <div className="text-center text-9xl font-bold text-slate-50">
-            {formatTime(totalSeconds)}
-          </div>
+          <DisplayTimer totalSeconds={totalSeconds} />
           <div className="flex justify-center p-8">
             <button
               onClick={toggleTimer}
